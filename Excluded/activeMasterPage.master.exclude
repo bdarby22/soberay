@@ -1,0 +1,167 @@
+<%@ Master Language="VB" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<script runat="server">
+
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+<STYLE TYPE="text/css">
+a.email:link { color: blue; text-decoration: none }
+a.email:active { color: blue; text-decoration: none }
+a.email:visited { color: blue; text-decoration: none }
+a.email:hover { color: blue; text-decoration: underline }
+
+.Buttons 
+{  
+   font-family: Garamond; 
+   font-size: 11px; 
+}
+
+
+</STYLE>
+
+<title>actives</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv='refresh'>
+<!-- ImageReady Preload Script (actives.psd) -->
+<script type="text/javascript">
+<!--
+
+function newImage(arg) {
+	if (document.images) {
+		rslt = new Image();
+		rslt.src = arg;
+		return rslt;
+	}
+}
+
+function changeImages() {
+	if (document.images && (preloadFlag == true)) {
+		for (var i=0; i<changeImages.arguments.length; i+=2) {
+			document[changeImages.arguments[i]].src = changeImages.arguments[i+1];
+		}
+	}
+}
+
+var preloadFlag = false;
+function preloadImages() {
+	if (document.images) {
+		actives_05_over = newImage("actives_05-over.gif");
+		actives_06_over = newImage("actives_06-over.gif");
+		actives_07_over = newImage("actives_07-over.gif");
+		actives_08_over = newImage("actives_08-over.gif");
+		actives_09_over = newImage("actives_09-over.gif");
+		actives_10_over = newImage("actives_10-over.gif");
+		preloadFlag = true;
+	}
+}
+
+// -->
+</script>
+<!-- End Preload Script -->
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onload="preloadImages();" style="font-size: 12pt; text-align: center; font-family: Times New Roman;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="800">
+        <tr>
+            <td align="center" rowspan="2" valign="top">
+<table id="Table_01" width="800" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td style="height: 21px" valign="top" align="left" background="spacer_red.gif">
+			<img src="actives_01.gif" width="18" height="21" alt=""></td>
+		<td width="759" colspan="6" background="spacer_red.gif" style="height: 21px; text-align: center" valign="middle">
+            <span style="color: #1d2942;">
+                <asp:ImageMap ID="ImageMap1" runat="server" ImageUrl="phiphititle.gif">
+                    <asp:RectangleHotSpot Bottom="20" HotSpotMode="Navigate" Left="80" NavigateUrl="http://www.kirschworks.net/pike/index.htm" />
+                </asp:ImageMap></span></td>
+		<td style="height: 21px; font-size: 12pt;" valign="top" align="right" background="spacer_red.gif">
+			<img src="actives_03.gif" width="23" height="21" alt=""></td>
+	</tr>
+	<tr style="font-size: 12pt">
+		<td colspan="8" style="height: 3px" background="actives_04.gif">
+			</td>
+	</tr>
+	<tr style="font-size: 12pt">
+		<td colspan="2" style="height: 8px">
+			<a href="http://www.kirschworks.net/activePages/aInew.aspx"
+				onmouseover="changeImages('actives_05', 'actives_05-over.gif'); return true;"
+				onmouseout="changeImages('actives_05', 'actives_05.gif'); return true;"
+				onmousedown="changeImages('actives_05', 'actives_05-over.gif'); return true;"
+				onmouseup="changeImages('actives_05', 'actives_05-over.gif'); return true;">
+				<img name="actives_05" src="actives_05.gif" width="133" height="19" border="0" alt=""></a></td>
+		<td style="height: 8px">
+			<a href="http://www.kirschworks.net/PhotoAlbum_Contents.aspx"
+				onmouseover="changeImages('actives_06', 'actives_06-over.gif'); return true;"
+				onmouseout="changeImages('actives_06', 'actives_06.gif'); return true;"
+				onmousedown="changeImages('actives_06', 'actives_06-over.gif'); return true;"
+				onmouseup="changeImages('actives_06', 'actives_06-over.gif'); return true;">
+				<img name="actives_06" src="actives_06.gif" width="133" height="19" border="0" alt=""></a></td>
+		<td style="height: 8px">
+			<a href="http://www.kirschworks.net/x32Nghyu7/default.asp"
+				onmouseover="changeImages('actives_07', 'actives_07-over.gif'); return true;"
+				onmouseout="changeImages('actives_07', 'actives_07.gif'); return true;"
+				onmousedown="changeImages('actives_07', 'actives_07-over.gif'); return true;"
+				onmouseup="changeImages('actives_07', 'actives_07-over.gif'); return true;">
+				<img name="actives_07" src="actives_07.gif" width="135" height="19" border="0" alt=""></a></td>
+		<td style="height: 8px">
+			<a href="../activePages/aPledges.aspx"
+				onmouseover="changeImages('actives_08', 'actives_08-over.gif'); return true;"
+				onmouseout="changeImages('actives_08', 'actives_08.gif'); return true;"
+				onmousedown="changeImages('actives_08', 'actives_08-over.gif'); return true;"
+				onmouseup="changeImages('actives_08', 'actives_08-over.gif'); return true;">
+				<img name="actives_08" src="actives_08.gif" width="135" height="19" border="0" alt=""></a></td>
+		<td style="height: 8px">
+			<a href="http://www.greektelephonedirectory.com/"
+				onmouseover="changeImages('actives_09', 'actives_09-over.gif'); return true;"
+				onmouseout="changeImages('actives_09', 'actives_09.gif'); return true;"
+				onmousedown="changeImages('actives_09', 'actives_09-over.gif'); return true;"
+				onmouseup="changeImages('actives_09', 'actives_09-over.gif'); return true;">
+				<img name="actives_09" src="actives_09.gif" width="135" height="19" border="0" alt=""></a></td>
+		<td colspan="2" style="width: 1229px; height: 8px">
+			<a href="http://www.omegafi.com"
+				onmouseover="changeImages('actives_10', 'actives_10-over.gif'); return true;"
+				onmouseout="changeImages('actives_10', 'actives_10.gif'); return true;"
+				onmousedown="changeImages('actives_10', 'actives_10-over.gif'); return true;"
+				onmouseup="changeImages('actives_10', 'actives_10-over.gif'); return true;">
+				<img name="actives_10" src="actives_10.gif" width="129" height="19" border="0" alt=""></a></td>
+	</tr>
+	<tr>
+        <td colspan="8" style="height: 5px; text-align: left;">
+                    </td>
+	</tr>
+</table>
+                <table border="0" cellpadding="0" cellspacing="0" width="800">
+                    <tr>
+                        <td style="width: 481px" rowspan="2" valign="top">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </td>
+                        <td valign="top">
+                            <form action="http://www.google.com/search" method="get">
+                                &nbsp;
+                                <input maxlength="255" name="q" size="25" style="font-size: 10pt; background-image: none;
+                                    text-indent: 2px; background-color: #ffffcc" type="text" />
+                                <input name="btnG" type="submit" value="Pike Google" /></form>
+                        </td>
+                    </tr>
+                </table>
+                
+            </td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+<!-- ImageReady Slices (actives.psd) -->
+<!-- End ImageReady Slices -->
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 800px" align="center">
+        <tr>
+            <td align="center">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

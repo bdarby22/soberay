@@ -1,0 +1,162 @@
+using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Web;
+using System.Web.SessionState;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+
+namespace SearchDotNetC
+{
+	/// <summary>
+	/// Summary description for WebForm1.
+	/// </summary>
+	public partial class SiteSearch : System.Web.UI.Page
+	{
+		
+		private Searchs.UserSearch sSite;	
+		protected void Page_Load(object sender, System.EventArgs e)
+		{
+			string strSearchWords = "";
+			//If there is no words entered by the user to search for then dont carryout the file search routine
+			pnlSearchResults.Visible = false;
+			if(!IsPostBack)
+			{
+				//Response.Write(Context.Request["txtSearch"]);
+				if(Request.Params["search"] != null)
+				{
+					strSearchWords = Request.Params["search"].Trim();
+					Search.Text = Request.Params["search"].Trim();
+				}
+			}
+			else
+				strSearchWords = Search.Text.Trim();
+
+
+			if(! strSearchWords.Equals(""))
+			{
+				Searchs.Site.ApplicationPath = String.Format("http://{0}{1}", Request.ServerVariables["HTTP_HOST"], Request.ApplicationPath);
+				sSite = SearchSite(strSearchWords);
+
+				if(sSite.PageDataset != null)
+				{
+					pnlSearchResults.Visible = true;
+					lblSearchWords.Text = sSite.SearchWords;
+
+					if( ViewState["SortExpression"] == null)
+						ViewState["SortExpression"] = "MatchCount Desc";
+					BindDataGrid((string)ViewState["SortExpression"]);
+					lblTotalFiles.Text = sSite.TotalFilesSearched.ToString();
+					lblFilesFound.Text = sSite.TotalFilesFound.ToString();
+				}
+			}
+		}
+
+		#region Web Form Designer generated code
+		override protected void OnInit(EventArgs e)
+		{
+			//
+			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
+			//
+			InitializeComponent();
+			base.OnInit(e);
+		}
+		
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{    
+			this.dgrdPages.PageIndexChanged += new System.Web.UI.WebControls.DataGridPageChangedEventHandler(this.dgrdPages_PageIndexChanged);
+			this.dgrdPages.SortCommand += new System.Web.UI.WebControls.DataGridSortCommandEventHandler(this.dgrdPages_SortCommand);
+
+		}
+		#endregion
+
+		///<summary>
+		/// The  sSite.PageDataset is used to populate the datagrid.
+		///</summary>
+		private Searchs.UserSearch SearchSite(string strSearch)
+		{
+			Searchs.UserSearch srchSite;
+			srchSite = new Searchs.UserSearch();
+			//Read in all the search words into one variable
+			srchSite.SearchWords = strSearch;
+
+			if( Phrase.Checked)
+				srchSite.SearchCriteria = Searchs.SearchCriteria.Phrase;
+			else
+				if( AllWords.Checked)
+				srchSite.SearchCriteria = Searchs.SearchCriteria.AllWords;
+			else
+				if( AnyWords.Checked)
+				srchSite.SearchCriteria = Searchs.SearchCriteria.AnyWords;
+			
+			srchSite.Search(Server.MapPath("./"));
+			return srchSite;
+		}
+
+		///<summary>
+		/// The  sSite.PageDataset is used to populate the datagrid.
+		///</summary>
+		private void BindDataGrid(string strSortField)
+		{
+			DataView dvwPages;
+			dvwPages = sSite.PageDataset.Tables["Pages"].DefaultView;
+			dvwPages.Sort = strSortField;
+			dgrdPages.DataSource = dvwPages;
+			dgrdPages.DataBind();
+		}
+
+		/// <summary>
+		/// The ViewState[ "SortExpression" ] is Assigned the sort expression value.
+		/// The datagrid is then populated using the BindDataGrid function.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="e"></param>
+		private void dgrdPages_SortCommand(object source, System.Web.UI.WebControls.DataGridSortCommandEventArgs e)
+		{
+			ViewState["SortExpression"] = e.SortExpression;
+			BindDataGrid((string)ViewState["SortExpression"]);
+		}
+
+		/// <summary>
+		/// The CurrentPageIndex is Assigned the page index value.
+		/// The datagrid is then populated using the BindDataGrid function.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="e"></param>
+		private void dgrdPages_PageIndexChanged(object source, System.Web.UI.WebControls.DataGridPageChangedEventArgs e)
+		{
+			dgrdPages.CurrentPageIndex = e.NewPageIndex;
+			BindDataGrid((string)ViewState["SortExpression"]);
+		}
+
+		/// <summary>
+		/// Display title of searched pages
+		/// </summary>
+		/// <param name="Title"></param>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		protected string DisplayTitle(string Title, string Path )
+		{
+			return String.Format("<A href='{1}'>{0}</a>", Title, Path);
+		}
+
+		/// <summary>
+		/// Path of the file is returned
+		/// </summary>
+		/// <param name="Path"></param>
+		/// <returns></returns>
+		protected string DisplayPath(string Path)
+		{
+			return String.Format("{0}{1}/{2}", Request.ServerVariables["HTTP_HOST"], Request.ApplicationPath, Path);
+		}
+
+
+	}
+}

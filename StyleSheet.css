@@ -1,0 +1,27 @@
+﻿body {font-family: Tahoma; font-size: 9pt; font-style: normal; letter-spacing: 1px
+} 
+
+a.master:link  { color: black; text-decoration: none; font-family: Tahoma; letter-spacing: 1px; font-size: 9pt}
+a.master:active { color: black; text-decoration: none; font-family: Tahoma; letter-spacing: 1px; font-size: 9pt}
+a.master:visited  { color: black; text-decoration: none; font-family: Tahoma; letter-spacing: 1px; font-size: 9pt}
+a.master:hover  { color: black; text-decoration: underline; font-family: Tahoma; letter-spacing: 1px; font-size: 9pt}
+
+LEGEND
+{ font-size: 11pt; color: #8080FF; font-family: Tahoma; font-weight: bold
+}
+
+a.pics:link  { color: blue; text-decoration: none; font-family: Tahoma; letter-spacing: 1px }
+a.pics:active { color: blue; text-decoration: none; font-family: Tahoma; letter-spacing: 1px}
+a.pics:visited  { color: blue; text-decoration: none; font-family: Tahoma; letter-spacing: 1px}
+a.pics:hover  { color: blue; text-decoration: underline; font-family: Tahoma; letter-spacing: 1px}
+
+a.pics1:link  { color: blue; text-decoration: none; font-family: Tahoma; letter-spacing: 1px }
+a.pics1:active { color: blue; text-decoration: none; font-family: Tahoma; letter-spacing: 1px}
+a.pics1:visited { color: blue; text-decoration: none; font-family: Tahoma; letter-spacing: 1px }
+a.pics1:hover  { color: blue; text-decoration: underline; font-family: Tahoma; letter-spacing: 1px}
+
+.sell
+{
+    white-space: nowrap; overflow: hidden;
+}
+

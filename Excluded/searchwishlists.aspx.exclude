@@ -1,0 +1,299 @@
+<%@ Page Language="C#" MasterPageFile="MasterPage.master" Title="GoDongo - Search Wishlists" %>
+
+<%@ Import Namespace="System.Data.OleDb" %>
+
+<script runat="server">
+
+    protected void btnWishSearch_Click(object sender, EventArgs e)
+    {
+        if (txtWishSearch.Text.Contains("@"))
+        {
+            //declare a connection object
+            OleDbConnection WishlistConnection = new
+                OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+                Server.MapPath("").ToString() + "\\App_Data\\Wishlist.mdb");
+
+            //declares the command and generates an SQL
+            OleDbCommand CheckEmailCommand = new OleDbCommand("SELECT xUSER$EmailAddress FROM Wishlist WHERE xUSER$EmailAddress = @WishlistEmail", WishlistConnection);
+
+            CheckEmailCommand.Parameters.Add("@WishlistEmail", OleDbType.Char).Value = txtWishSearch.Text;
+
+            WishlistConnection.Open();
+
+            //Executes the SQL command and puts the answer into a data reader
+            OleDbDataReader CheckEmailReader = CheckEmailCommand.ExecuteReader();
+
+            if (CheckEmailReader.HasRows)
+            {
+                dlWishlist.Visible = true;
+                dlWishlist.Enabled = true;
+                lblNoResults.Visible = false;
+                lblNoResults.Enabled = false;
+                lblNoResults2.Visible = false;
+                lblNoResults2.Enabled = false;
+                CheckEmailReader.Close();
+                WishlistConnection.Close();
+            }
+
+            else
+            {
+                txtWishSearch.Text = "";
+                lblNoResults.Enabled = true;
+                lblNoResults.Visible = true;
+                lblNoResults.Text = "No results were found. Please search again using the persons email <br> or try searching for their name.";
+                CheckEmailReader.Close();
+                WishlistConnection.Close();
+            }
+
+            if (dlWishlist.Items.Count == 0)
+            {
+                lblNoResults2.Text = "The user whom you are searching for currently has no public Wishlists";
+                lblNoResults2.Enabled = true;
+                lblNoResults2.Visible = true;
+            }
+
+        }
+        else
+        {
+            OleDbConnection WishlistConnection = new OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+            Server.MapPath("").ToString() + "\\App_Data\\Wishlist.mdb");
+
+            OleDbCommand CheckNameCommand = new OleDbCommand("SELECT Fullname FROM xUser WHERE FullName LIKE @FullName", WishlistConnection);
+
+            CheckNameCommand.Parameters.Add("@FullName", OleDbType.Char).Value = "%" + txtWishSearch.Text + "%";
+
+            WishlistConnection.Open();
+
+            OleDbDataReader CheckNameReader = CheckNameCommand.ExecuteReader();
+
+            if (CheckNameReader.HasRows)
+            {
+                dlWishlist2.Visible = true;
+                dlWishlist2.Enabled = true;
+                lblNoResults.Visible = false;
+                lblNoResults.Enabled = false;
+                lblNoResults2.Visible = false;
+                lblNoResults2.Enabled = false;
+            }
+
+            else
+            {
+                txtWishSearch.Text = "";
+                lblNoResults.Enabled = true;
+                lblNoResults.Visible = true;
+                lblNoResults.Text = "No results where found. Please search again using the persons name <br> (ie. wishlistboy3, Jane Doe, John, etc...) <br> or try searching for their email.";
+            }
+
+            if (dlWishlist2.Items.Count == 0)
+            {
+                lblNoResults2.Text = "The user whom you are searching for currently has no public Wishlists";
+                lblNoResults2.Enabled = true;
+                lblNoResults2.Visible = true;
+            }
+
+            CheckNameReader.Close();
+            WishlistConnection.Close();
+        }
+    }
+    protected string FormatUrl(int WishlistID)
+    {
+        return "otherwishlist.aspx?" + "ID=" + WishlistID;
+    }
+
+    protected string FormatUrl2(string EmailAddress)
+    {
+        return "mailto:" + EmailAddress;
+    }
+
+    //protected string FormatUrl2(int ProductID)
+    //{
+    //    Session["productinsert"] = Request.QueryString["ID"];
+    //    return "mywishlist.aspx?" + "productID=" + ProductID;
+    //}
+
+    //}
+
+    protected void lnkWishlistTitle_Click(object sender, EventArgs e)
+    {
+        LinkButton lnkWishlistTitle = (LinkButton)sender;
+        DataListItem dtlDataListItem = (DataListItem)lnkWishlistTitle.NamingContainer;
+
+        Int32 WishlistID = Convert.ToInt32((((Label)dtlDataListItem.FindControl("lblWishlistID")).Text));
+
+        Session["CurrentWishlistID"] = WishlistID;
+
+        Response.Redirect("mywishlist.aspx");
+    }
+</script>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <table align="center" style="width: 602px">
+        <tr>
+            <td align="center" colspan="3" style="background-image: url(images/dotsbackground.gif);
+                background-repeat: repeat-x">
+                <span style="font-size: 0.55em">&nbsp;</span></td>
+        </tr>
+        <tr>
+            <td align="center" style="width: 137px; text-align: right; height: 31px;" valign="middle">
+                <span style="font-size: 10pt; font-family: Arial"><span style="font-size: 8pt">Search
+                    for a Wishlist:&nbsp;</span> </span>
+            </td>
+            <td style="text-align: center; height: 31px;" valign="middle">
+                <asp:TextBox ID="txtWishSearch" runat="server" Width="313px"></asp:TextBox><br />
+                <span style="font-size: 8pt">
+                </span></td>
+            <td style="width: 124px; height: 31px;" valign="middle">
+                <span style="font-size: 0.35em"></span><span style="font-size: 0.2em">&nbsp;</span><asp:Button ID="btnWishSearch" runat="server" OnClick="btnWishSearch_Click" Text="Search" /></td>
+        </tr>
+        <tr>
+            <td align="center" style="width: 137px; text-align: right" valign="top">
+            </td>
+            <td style="text-align: center" valign="middle">
+                <span style="font-size: 8pt">
+                (Enter the persons email address or name)</span></td>
+            <td style="width: 124px" valign="top">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="background-image: url(images/dotsbackground.gif); background-repeat: repeat-x;
+                text-align: center; height: 9px;">
+                <span style="font-size: 0.55em">&nbsp;</span></td>
+        </tr>
+    </table>
+    <table style="width: 100%">
+        <tr>
+            <td align="center">
+                <asp:Label ID="lblNoResults" runat="server" Enabled="False" Font-Bold="True" ForeColor="Red"
+                    Visible="False"></asp:Label><asp:Label ID="lblNoResults2" runat="server" Enabled="False" Font-Bold="True" ForeColor="Red"
+                    Visible="False"></asp:Label><asp:DataList ID="dlWishlist" runat="server" DataKeyField="EmailAddress" DataSourceID="adsWish"
+                    Enabled="False" Visible="False">
+                    <ItemTemplate>
+                        <table style="border-right: gainsboro thin solid; border-top: gainsboro thin solid;
+                            border-left: gainsboro thin solid; width: 367px; border-bottom: gainsboro thin solid">
+                            <tr>
+                                <td align="left" bgcolor="#8ac6f3" colspan="6" style="height: 27px">
+                                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="wishtitle" Font-Names="Arial"
+                                        Font-Size="14pt" NavigateUrl='<%# FormatUrl( (int) Eval("WishlistID")) %>' Text='<%# Eval("Title") %>'></asp:HyperLink><br />
+                                    <span style="font-size: 8pt"><span style="font-family: Verdana">Last Updated On:</span>
+                                        <asp:Label ID="DateEditedLabel" runat="server" Font-Bold="True" ForeColor="White"
+                                            Text='<%# Eval("DateUpdated") %>' Width="122px"></asp:Label></span></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" style="height: 18px" valign="top">
+                                </td>
+                                <td align="left" colspan="5" style="height: 18px" valign="top">
+                                    <span style="font-size: 8pt; font-family: Verdana; color: #404040;">created by:</span>
+                                    <asp:Label ID="FullNameLabel" runat="server" Text='<%# Eval("FullName") %>'></asp:Label>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" style="height: 18px" valign="top">
+                                </td>
+                                <td align="left" colspan="5" style="height: 18px" valign="top">
+                                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="email" NavigateUrl='<%# FormatUrl2( (string) Eval("EmailAddress")) %>'
+                                        Text='<%# Eval("EmailAddress") %>'></asp:HyperLink></td>
+                            </tr>
+                        </table>
+                    </ItemTemplate>
+                    <SeparatorTemplate>
+                        <span style="font-size: 0.65em">
+                            <br />
+                        </span>
+                        <table style="width: 100px">
+                            <tr>
+                                <td style="background-image: url(images/dotsbackground.gif); width: 100px; background-repeat: repeat-x">
+                                    <span style="font-size: 0.55em">&nbsp;</span></td>
+                            </tr>
+                        </table>
+                        <span style="font-size: 0.65em">&nbsp;</span>
+                    </SeparatorTemplate>
+                </asp:DataList>
+                <asp:DataList ID="dlWishlist2" runat="server" DataSourceID="adsWish2" Enabled="False"
+                    Visible="False">
+                    <ItemTemplate>
+                        <table style="border-right: gainsboro thin solid; border-top: gainsboro thin solid;
+                            border-left: gainsboro thin solid; width: 367px; border-bottom: gainsboro thin solid">
+                            <tr>
+                                <td align="left" bgcolor="#8ac6f3" colspan="6" style="height: 27px">
+                                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="wishtitle" Font-Names="Arial"
+                                        Font-Size="14pt" NavigateUrl='<%# FormatUrl( (int) Eval("WishlistID")) %>' Text='<%# Eval("Title") %>'></asp:HyperLink>
+                                    <br />
+                                    <span style="font-size: 8pt"><span style="font-family: Verdana">Last Modified:</span>
+                                        <asp:Label ID="DateEditedLabel" runat="server" Font-Bold="True" ForeColor="White"
+                                            Text='<%# Eval("DateUpdated") %>' Width="122px"></asp:Label></span></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" style="height: 18px" valign="top">
+                                </td>
+                                <td align="left" colspan="5" style="height: 18px" valign="top">
+                                    <span style="font-size: 8pt; font-family: Verdana; color: #404040;">created by:</span>
+                                    <asp:Label ID="FullNameLabel" runat="server" Text='<%# Eval("FullName") %>'></asp:Label>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" style="height: 18px" valign="top">
+                                </td>
+                                <td align="left" colspan="5" style="height: 18px" valign="top">
+                                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="email" NavigateUrl='<%# FormatUrl2( (string) Eval("EmailAddress")) %>'
+                                        Text='<%# Eval("EmailAddress") %>'></asp:HyperLink></td>
+                            </tr>
+                        </table>
+                    </ItemTemplate>
+                    <SeparatorTemplate>
+                        <span style="font-size: 0.65em">
+                            <br />
+                        </span>
+                        <table style="width: 100px">
+                            <tr>
+                                <td style="background-image: url(images/dotsbackground.gif); width: 100px; background-repeat: repeat-x">
+                                    <span style="font-size: 0.55em">&nbsp;</span></td>
+                            </tr>
+                        </table>
+                        <span style="font-size: 0.65em">&nbsp;</span>
+                    </SeparatorTemplate>
+                </asp:DataList>
+                <br />
+                <asp:AccessDataSource ID="adsWish2" runat="server" DataFile="App_Data/Wishlist.mdb"
+                    SelectCommand="SELECT wishlist.Title, wishlist.DateUpdated, wishlist.WishlistID, xUser.EmailAddress, xUser.FullName FROM wishlist, xUser WHERE xUser.EmailAddress = wishlist.xUSER$EmailAddress AND private = false AND FullName LIKE '%' + ? + '%'&#13;&#10;AND WishlistID IN (SELECT WishlistID FROM WISHLIST, LINEITEM WHERE WishlistID = WISHLIST$WishlistID)  AND FullName NOT IN (SELECT EmailAddress FROM xUSER)ORDER BY DateUpdated DESC;">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="txtWishSearch" Name="?" PropertyName="Text" />
+                    </SelectParameters>
+                </asp:AccessDataSource>
+                <asp:AccessDataSource ID="adsWish" runat="server" DataFile="App_Data/Wishlist.mdb"
+                    SelectCommand="SELECT wishlist.Title, wishlist.DateUpdated, wishlist.wishlistID, xUser.EmailAddress, xUser.FullName&#13;&#10;FROM wishlist, xUser&#13;&#10;WHERE xUser.EmailAddress = wishlist.xUSER$EmailAddress AND xUSER$EmailAddress = ? AND Private = false AND WishlistID IN (SELECT WishlistID FROM WISHLIST, LINEITEM WHERE WishlistID = WISHLIST$WishlistID)&#13;&#10;ORDER BY DateUpdated DESC;&#13;&#10;&#13;&#10;">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="txtWishSearch" Name="?" PropertyName="Text" />
+                    </SelectParameters>
+                </asp:AccessDataSource>
+            </td>
+        </tr>
+    </table>
+</asp:Content>
+<asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder2">
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 22px; height: 132px">
+            </td>
+            <td style="height: 132px; text-align: left" valign="top">
+                <asp:DataList ID="DataList2" runat="server" DataSourceID="adswwish">
+                    <ItemTemplate>
+                        -
+                        <asp:LinkButton ID="lnkWishlistTitle" runat="server" CssClass="master" OnClick="lnkWishlistTitle_Click"
+                            Text='<%# Eval("Title") %>'></asp:LinkButton><br />
+                        <span style="font-size: 0.3em">
+                            <br />
+                        </span><span style="font-size: 0.3em">
+                            <asp:Label ID="lblDateUpdated" runat="server" Enabled="False" Font-Size="7pt" Text='<%# Eval("DateUpdated") %>'
+                                Visible="False"></asp:Label>
+                            <asp:Label ID="lblWishlistID" runat="server" Enabled="False" Font-Size="7pt" Text='<%# Eval("WishlistID") %>'
+                                Visible="False"></asp:Label></span>
+                    </ItemTemplate>
+                </asp:DataList>
+                <asp:AccessDataSource ID="adswwish" runat="server" DataFile="App_Data/Wishlist.mdb"
+                    SelectCommand="SELECT wishlist.title, wishlist.wishlistID, wishlist.DateUpdated&#13;&#10;FROM wishlist, xUser&#13;&#10;WHERE xUser.emailaddress = wishlist.XUSER$EmailAddress&#13;&#10;AND wishlist.xUSER$emailaddress = ?&#13;&#10;AND Archived = false&#13;&#10;ORDER BY WishlistID">
+                    <SelectParameters>
+                        <asp:SessionParameter Name="?" SessionField="EmailAddress" />
+                    </SelectParameters>
+                </asp:AccessDataSource>
+            </td>
+        </tr>
+    </table>
+</asp:Content>

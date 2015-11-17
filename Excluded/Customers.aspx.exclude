@@ -1,0 +1,38 @@
+<%@ Page Language="C#" MasterPageFile="MasterPage.master" Title="Customers" %>
+<%@ Import Namespace = System.Data.OleDb %>
+<script runat="server">
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        OleDbConnection SouthBreezeConnection = new
+            OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+            Server.MapPath("").ToString() + "\\App_Data\\SouthBreezeGroceries.mdb");
+        
+        OleDbCommand SelectCustomerCommand = new 
+            OleDbCommand("SELECT CompanyName, contactname, contacttitle, emailaddress, phone FROM [Customer]", SouthBreezeConnection);
+
+        SouthBreezeConnection.Open();
+        OleDbDataReader CustomerReader = SelectCustomerCommand.ExecuteReader();
+
+        if (CustomerReader.HasRows)
+        {
+            grvCustomers.DataSource = CustomerReader;
+            grvCustomers.DataBind();
+        }
+        CustomerReader.Close();
+        SouthBreezeConnection.Close();
+
+        GridViewRow CustomerHeader = grvCustomers.HeaderRow;
+        CustomerHeader.Cells[0].Text = "Company Name";
+        CustomerHeader.Cells[1].Text = "Contact Name";
+        CustomerHeader.Cells[2].Text = "Contact Title";
+        CustomerHeader.Cells[3].Text = "Email Address";
+        CustomerHeader.Cells[4].Text = "Phone";
+    }
+</script>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <asp:GridView ID="grvCustomers" runat="server">
+    </asp:GridView>
+</asp:Content>
+

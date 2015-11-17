@@ -1,0 +1,95 @@
+<%@ Page language="c#" Inherits="SearchDotNetC.SiteSearch" CodeFile="SiteSearch.aspx.cs" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>WebForm1</title>
+		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" Content="C#">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+	</HEAD>
+	<body>
+		<form id="Form1" method="post" runat="server">
+			<TABLE id="Table1" cellSpacing="1" cellPadding="1" width="100%" border="0">
+				<TR>
+					<TD colSpan="2"></TD>
+				</TR>
+				<TR>
+					<TD vAlign="top" width="150"></TD>
+					<TD vAlign="top">
+						<TABLE id="Table2" cellSpacing="0" cellPadding="0" width="90%" align="center">
+							<TR>
+								<TD vAlign="middle" align="right" width="165" height="66" rowSpan="3">&nbsp;
+								</TD>
+								<TD vAlign="middle" align="right" width="15" height="66" rowSpan="3">&nbsp;</TD>
+								<TD width="571" height="4">Search the Web Site:
+								</TD>
+							</TR>
+							<TR>
+								<TD width="571" height="2">
+									<asp:textbox id="Search" runat="server" CssClass="Textbox"></asp:textbox>&nbsp;
+									<asp:button id="srchbtn" runat="server" CssClass="Button" Text="Search >>"></asp:button></TD>
+							</TR>
+							<TR>
+								<TD vAlign="top" width="571" height="34">Search On :
+									<asp:radiobutton id="AllWords" runat="server" Text="All Words " Checked="True" GroupName="mode"></asp:radiobutton>
+									<asp:radiobutton id="AnyWords" runat="server" Text="Any Words " GroupName="mode"></asp:radiobutton>
+									<asp:radiobutton id="Phrase" runat="server" Text="Phrase" GroupName="mode"></asp:radiobutton></TD>
+							</TR>
+						</TABLE>
+						<asp:panel id="pnlSearchResults" runat="server" Visible="False">
+							<TABLE class="SearchStatus" id="Table3" cellSpacing="1" cellPadding="1" width="98%" align="center"
+								border="0">
+								<TR>
+									<TD height="18">Searched the site for
+										<asp:Label id="lblSearchWords" runat="server" Font-Bold="True"></asp:Label>.&nbsp;&nbsp;&nbsp;
+										<asp:Label id="lblFilesFound" runat="server" Font-Bold="True">Label</asp:Label>&nbsp;Files 
+										found
+									</TD>
+								</TR>
+							</TABLE>
+							<BR>
+							<asp:DataGrid id="dgrdPages" CssClass="Grid" HorizontalAlign="Center" Width="98%" CellSpacing="0"
+								BorderWidth="0" ShowHeader="False" AllowPaging="True" PageSize="10" PagerStyle-Mode="NumericPages"
+								DataKeyField="PageId" AutoGenerateColumns="False" AllowSorting="True" HeaderStyle-CssClass="GridHeader"
+								PagerStyle-CssClass="GridPager" FooterStyle-CssClass="GridFooter" SelectedItemStyle-CssClass="GridSelectedItem"
+								AlternatingItemStyle-CssClass="GridAlternatingItem" ItemStyle-CssClass="GridItem" CellPadding="0"
+								Runat="Server">
+								<SelectedItemStyle CssClass="GridSelectedItem"></SelectedItemStyle>
+								<AlternatingItemStyle CssClass="GridAlternatingItem"></AlternatingItemStyle>
+								<ItemStyle CssClass="GridItem"></ItemStyle>
+								<HeaderStyle CssClass="GridHeader"></HeaderStyle>
+								<FooterStyle CssClass="GridFooter"></FooterStyle>
+								<Columns>
+									<asp:TemplateColumn>
+										<ItemTemplate>
+											<%# DisplayTitle(DataBinder.Eval(Container.DataItem, "Title" ).ToString(), DataBinder.Eval(Container.DataItem, "Path").ToString()) %>
+											<br>
+											<%# DataBinder.Eval(Container.DataItem, "Description" ) %>
+											<br>
+											<span class="Path">
+												<%# String.Format("{0} - {1}kb", DisplayPath(DataBinder.Eval(Container.DataItem, "Path" ).ToString()), DataBinder.Eval(Container.DataItem, "Size" ).ToString()) %>
+											</span>
+											<br>
+											<br>
+										</ItemTemplate>
+									</asp:TemplateColumn>
+								</Columns>
+								<PagerStyle CssClass="GridPager" Mode="NumericPages"></PagerStyle>
+							</asp:DataGrid>
+							<TABLE class="SearchStatus" id="Table4" cellSpacing="1" cellPadding="1" width="98%" align="center"
+								border="0">
+								<TR>
+									<TD width="47%" height="18">&nbsp;Searched
+										<asp:Label id="lblTotalFiles" runat="server" Font-Bold="True"></asp:Label>&nbsp;documents 
+										in total.
+									</TD>
+									<TD align="right" width="53%" height="18"></TD>
+								</TR>
+							</TABLE>
+						</asp:panel></TD>
+				</TR>
+			</TABLE>
+		</form>
+	</body>
+</HTML>

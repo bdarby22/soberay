@@ -1,0 +1,427 @@
+<%@ Page Language="C#" MasterPageFile="MasterPage.master" Title="Edit Account" %>
+<%@ Import Namespace = System.Data.OleDb %>
+<script runat="server">                 
+   
+    
+    protected void btnChangePassword_Click(object sender, EventArgs e)
+    {
+        lblIncorrectPassword.Visible = false;
+        
+        OleDbConnection WishlistConnection = new OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+            Server.MapPath("").ToString() + "\\App_Data\\Wishlist.mdb");
+
+        OleDbCommand CheckPasswordCommand = new OleDbCommand("SELECT EmailAddress FROM xUser WHERE EmailAddress = @EmailAddress AND Password = @Password", WishlistConnection);
+        CheckPasswordCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Session["EmailAddress"].ToString();
+        CheckPasswordCommand.Parameters.Add("@Password", OleDbType.Char).Value = txtCurrentPassword.Text;
+        
+        WishlistConnection.Open();
+        OleDbDataReader CheckPasswordReader = CheckPasswordCommand.ExecuteReader();                  
+
+        if (CheckPasswordReader.HasRows)
+        {
+            CheckPasswordReader.Close();   
+            
+            OleDbCommand UpdatePasswordCommand = new OleDbCommand("UPDATE xUSER SET [Password] = (@Password) WHERE EmailAddress = @EmailAddress", WishlistConnection);
+            UpdatePasswordCommand.Parameters.Add("@Password", OleDbType.Char).Value = txtNewPassword.Text;
+            UpdatePasswordCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Convert.ToString(Session["EmailAddress"]);
+            UpdatePasswordCommand.ExecuteNonQuery();
+            WishlistConnection.Close();
+            lblIncorrectPassword.Visible = false;
+            lblPasswordChanged.Visible = true;
+        }
+
+        else
+        {
+            CheckPasswordReader.Close();
+            WishlistConnection.Close();
+            lblIncorrectPassword.Visible = true;
+            lblPasswordChanged.Visible = false;
+        }
+
+        pnlDeleteAccount.Enabled = false;
+        pnlDeleteAccount.Visible = false;
+        pnlConfirmDeletion.Enabled = false;
+        pnlConfirmDeletion.Visible = false;
+        lnkDeleteAccount.Enabled = true;
+        lnkDeleteAccount.Visible = true;
+    }        
+
+    protected void btnChangeName_Click(object sender, EventArgs e)
+    {
+        txtFirstName.DataBind();
+        txtLastName.DataBind();
+        
+        OleDbConnection WishlistConnection = new OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+        Server.MapPath("").ToString() + "\\App_Data\\Wishlist.mdb");
+
+        OleDbCommand ChangeNameCommand = new OleDbCommand("UPDATE xUSER SET FirstName = @FirstName, LastName = @LastName, FullName = @FullName WHERE EmailAddress = @EmailAddress", WishlistConnection);
+        ChangeNameCommand.Parameters.Add("@FirstName", OleDbType.Char).Value = txtFirstName.Text;
+        ChangeNameCommand.Parameters.Add("@LastName", OleDbType.Char).Value = txtLastName.Text;
+        ChangeNameCommand.Parameters.Add("@FullName", OleDbType.Char).Value = txtFirstName.Text + " " + txtLastName.Text;
+        ChangeNameCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Session["EmailAddress"].ToString();
+
+        WishlistConnection.Open();
+        ChangeNameCommand.ExecuteNonQuery();
+        WishlistConnection.Close();
+
+        PutNameInLabel();
+        txtFirstName.Text = "";
+        txtLastName.Text = "";
+
+        pnlDeleteAccount.Enabled = false;
+        pnlDeleteAccount.Visible = false;
+        pnlConfirmDeletion.Enabled = false;
+        pnlConfirmDeletion.Visible = false;
+        lnkDeleteAccount.Enabled = true;
+        lnkDeleteAccount.Visible = true;
+
+        Response.Redirect("EditAccount.aspx");
+    }
+
+    protected void PutNameInLabel()
+    {
+        OleDbConnection WishlistConnection = new OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+            Server.MapPath("").ToString() + "\\App_Data\\Wishlist.mdb");
+
+        OleDbCommand GetFirstNameCommand = new OleDbCommand("SELECT FirstName FROM xUSER WHERE EmailAddress = @EmailAddress", WishlistConnection);
+        GetFirstNameCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Session["EmailAddress"].ToString();
+        OleDbCommand GetLastNameCommand = new OleDbCommand("SELECT LastName FROM xUSER WHERE EmailAddress = @EmailAddress", WishlistConnection);
+        GetLastNameCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Session["EmailAddress"].ToString();
+
+        WishlistConnection.Open();
+        OleDbDataReader GetFirstNameReader = GetFirstNameCommand.ExecuteReader();
+        OleDbDataReader GetLastNameReader = GetLastNameCommand.ExecuteReader();
+        GetFirstNameReader.Read();
+        GetLastNameReader.Read();
+        string FirstName = GetFirstNameReader[0].ToString();
+        string LastName = GetLastNameReader[0].ToString();
+        GetFirstNameReader.Dispose();
+        GetLastNameReader.Dispose();
+        GetFirstNameReader.Close();
+        GetLastNameReader.Close();
+        WishlistConnection.Close();
+
+        lblName.Text = "You are currently registered as " + FirstName + " " + LastName;  
+        
+    }
+
+    protected void lnkDeleteAccount_Click(object sender, EventArgs e)
+    {
+        pnlDeleteAccount.Enabled = true;
+        pnlDeleteAccount.Visible = true;
+        pnlConfirmDeletion.Enabled = false;
+        pnlConfirmDeletion.Visible = false;
+        lnkDeleteAccount.Enabled = false;
+        lnkDeleteAccount.Visible = false;
+    }
+
+    protected void lnkYes_Click(object sender, EventArgs e)
+    {
+        pnlConfirmDeletion.Enabled = true;
+        pnlConfirmDeletion.Visible = true;
+        pnlDeleteAccount.Enabled = false;
+        pnlDeleteAccount.Visible = false;
+        lblConfirmDeletionIncorrect.Enabled = false;
+        lblConfirmDeletionIncorrect.Visible = false;
+    }
+
+    protected void lnkNo_Click(object sender, EventArgs e)
+    {
+        pnlDeleteAccount.Enabled = false;
+        pnlDeleteAccount.Visible = false;
+        lnkDeleteAccount.Enabled = true;
+        lnkDeleteAccount.Visible = true;
+    }
+
+    protected void btnDeleteAccount_Click(object sender, EventArgs e)
+    {
+        OleDbConnection WishlistConnection = new OleDbConnection("Provider=Microsoft.Jet.OleDb.4.0; Data Source=" +
+            Server.MapPath("").ToString() + "\\App_Data\\Wishlist.mdb");
+
+        OleDbCommand CheckPasswordCommand = new OleDbCommand("SELECT EmailAddress FROM xUser WHERE EmailAddress = @EmailAddress AND Password = @Password", WishlistConnection);
+        CheckPasswordCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Session["EmailAddress"].ToString();
+        CheckPasswordCommand.Parameters.Add("@Password", OleDbType.Char).Value = txtConfirmDeletion.Text;
+
+        WishlistConnection.Open();
+        OleDbDataReader CheckPasswordReader = CheckPasswordCommand.ExecuteReader();
+
+        if (CheckPasswordReader.HasRows)
+        {
+            CheckPasswordReader.Close();            
+
+            OleDbCommand DeleteAccountCommand = new OleDbCommand("DELETE FROM xUSER WHERE EmailAddress = @EmailAddress", WishlistConnection);
+            DeleteAccountCommand.Parameters.Add("@EmailAddress", OleDbType.Char).Value = Session["EmailAddress"].ToString();
+            
+            DeleteAccountCommand.ExecuteNonQuery();
+            WishlistConnection.Close();
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("splash.aspx");
+        }
+
+        else
+        {
+            CheckPasswordReader.Close();
+            WishlistConnection.Close();
+            lblConfirmDeletionIncorrect.Enabled = true;
+            lblConfirmDeletionIncorrect.Visible = true;
+        }      
+    }
+
+    protected void btnCancelDeletion_Click(object sender, EventArgs e)
+    {
+        pnlConfirmDeletion.Enabled = false;
+        pnlConfirmDeletion.Visible = false;
+        lblConfirmDeletionIncorrect.Visible = false;
+        lnkDeleteAccount.Enabled = true;
+        lnkDeleteAccount.Visible = true;
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        PutNameInLabel();
+    }
+
+    protected void lnkWishlistTitle_Click(object sender, EventArgs e)
+    {
+        LinkButton lnkWishlistTitle = (LinkButton)sender;
+        DataListItem dtlDataListItem = (DataListItem)lnkWishlistTitle.NamingContainer;
+
+        Int32 WishlistID = Convert.ToInt32((((Label)dtlDataListItem.FindControl("lblWishlistID")).Text));
+
+        Session["CurrentWishlistID"] = WishlistID;
+
+        Response.Redirect("mywishlist.aspx");
+    }
+</script>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    
+        <table style="width: 492px">
+            <tr>
+                <td align="left" colspan="1" style="width: 407px; text-align: center">
+                </td>
+                <td colspan="2" style="text-align: center" align="left">
+                    <br />
+                    <asp:Label ID="lblName" runat="server" Width="403px" Font-Bold="True"></asp:Label><br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                </td>
+                <td colspan="2" style="background-image: url(images/dotsbackground.gif); background-repeat: repeat-x">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td style="width: 407px; text-align: right">
+                </td>
+                <td style="text-align: left; height: 24px;" align="left">
+                    First Name:</td>
+                <td>
+                    <asp:TextBox ID="txtFirstName" runat="server" Width="200px"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td style="width: 407px; height: 26px; text-align: right">
+                </td>
+                <td style="text-align: left; height: 24px;" align="left">
+                    Last Name:</td>
+                <td style="height: 26px;">
+                    <asp:TextBox ID="txtLastName" runat="server" Width="200px"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td style="width: 407px">
+                </td>
+                <td style="height: 24px; text-align: left" align="left">
+                </td>
+                <td>
+                    <asp:Button ID="btnChangeName" runat="server" OnClick="btnChangeName_Click" Text="Change Name!"
+                        ValidationGroup="1" /></td>
+            </tr>
+            <tr>
+                <td style="width: 407px; text-align: right">
+                </td>
+                <td style="text-align: left; height: 24px;" align="left">
+                    Current Password:</td>
+                <td>
+                    <asp:TextBox ID="txtCurrentPassword" runat="server" TextMode="Password" Width="200px"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td style="width: 407px">
+                </td>
+                <td style="height: 24px; text-align: left" align="left">
+                </td>
+                <td>
+                    <asp:Label ID="lblIncorrectPassword" runat="server" Text="Incorrect Current Password" Visible="False"
+                        Width="200px" ForeColor="Red"></asp:Label></td>
+            </tr>
+            <tr>
+                <td style="width: 407px; text-align: right">
+                </td>
+                <td style="text-align: left; height: 24px;" align="left">
+                    New Password:</td>
+                <td>
+                    <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password" Width="200px"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td style="width: 407px; text-align: right">
+                </td>
+                <td style="text-align: left; height: 24px;" align="left">
+                    Confirm New Password:</td>
+                <td>
+                    <asp:TextBox ID="txtConfirmNewPassword" runat="server" TextMode="Password" Width="200px"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td style="width: 407px; height: 21px">
+                </td>
+                <td style="height: 24px; text-align: left;" align="left">
+                </td>
+                <td style="height: 21px">
+                    <asp:Button ID="btnChangePassword" runat="server" OnClick="btnChangePassword_Click"
+                        Text="Change Password!" ValidationGroup="2" /></td>
+            </tr>
+            <tr>
+                <td style="width: 407px; height: 24px">
+                </td>
+                <td style="height: 24px; text-align: left;" align="left">
+                </td>
+                <td style="height: 24px" valign="top">
+                    <asp:Label ID="lblPasswordChanged" runat="server" Font-Bold="True" Text="Your Password Has Been Changed"
+                        Width="299px" Visible="False"></asp:Label></td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                </td>
+                <td colspan="2" style="background-image: url(images/dotsbackground.gif); background-repeat: repeat-x;
+                    height: 10px">
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="1" style="width: 407px" valign="middle">
+                </td>
+                <td colspan="2" align="center" valign="middle">
+                    <br />
+                    <asp:LinkButton ID="lnkDeleteAccount" runat="server" OnClick="lnkDeleteAccount_Click" CssClass="email">Would you like to deactivate your account?</asp:LinkButton><br />
+                    <asp:Panel ID="pnlDeleteAccount" runat="server" Enabled="False" Visible="False" HorizontalAlign="Center">
+                    <asp:Label ID="lblSure" runat="server" Text="By deleting your account, you will remove everything related to your account including any personal information and Wishlists. Are you sure you would like to delete your account?" Width="417px"></asp:Label><br />
+                        <br />
+                    <asp:LinkButton ID="lnkYes" runat="server" OnClick="lnkYes_Click" Width="159px" CssClass="email">Yes, delete my account</asp:LinkButton><br />
+                        <br />
+                    <asp:LinkButton ID="lnkNo" runat="server" OnClick="lnkNo_Click" CssClass="email">No, I would like to keep my account</asp:LinkButton><br />
+                    </asp:Panel>
+                    <asp:Panel ID="pnlConfirmDeletion" runat="server" Enabled="False" HorizontalAlign="Center" Visible="False">
+                        <asp:Label ID="lblConfirmDelete" runat="server" Text="Please confirm your password for deletion of your account:"
+                            Width="421px"></asp:Label><asp:TextBox ID="txtConfirmDeletion" runat="server" TextMode="Password" Width="200px"></asp:TextBox><br />
+                        <asp:Label ID="lblConfirmDeletionIncorrect" runat="server" ForeColor="Red" Text="Incorrect Password"
+                            Visible="False"></asp:Label><br />
+                        <asp:Button ID="btnDeleteAccount" runat="server" Text="Delete Account" OnClick="btnDeleteAccount_Click" ValidationGroup="3" /><br />
+                        <br />
+                        <asp:Button ID="btnCancelDeletion" runat="server" OnClick="btnCancelDeletion_Click"
+                            Text="Cancel" /></asp:Panel>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                </td>
+                <td colspan="2" style="background-image: url(images/dotsbackground.gif); background-repeat: repeat-x;
+                    text-align: left; height: 18px;">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="width: 407px; text-align: center">
+                </td>
+                <td colspan="2" style="text-align: center">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="1" style="width: 407px; text-align: center">
+                </td>
+                <td colspan="2" style="text-align: center">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td style="width: 407px">
+                </td>
+                <td>
+                    <asp:ValidationSummary ID="Summary1" runat="server" ShowMessageBox="True" ShowSummary="False"
+                        ValidationGroup="1" Width="146px" />
+                </td>
+                <td rowspan="4">
+                    <asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ControlToValidate="txtFirstName"
+                        Display="None" ErrorMessage="Please enter a first name!" ValidationGroup="1"></asp:RequiredFieldValidator><br />
+                    <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ControlToValidate="txtLastName"
+                        Display="None" ErrorMessage="Please enter a last name!" ValidationGroup="1"></asp:RequiredFieldValidator><br />
+                    <asp:RequiredFieldValidator ID="rfvCurrentPasword" runat="server" ControlToValidate="txtCurrentPassword"
+                        Display="None" ErrorMessage="Please enter current password!" ValidationGroup="2"></asp:RequiredFieldValidator><br />
+                    <asp:RequiredFieldValidator ID="rfvNewPassword" runat="server" ControlToValidate="txtNewPassword"
+                        Display="None" ErrorMessage="Please enter a new password!" ValidationGroup="2"></asp:RequiredFieldValidator><br />
+                    <asp:RegularExpressionValidator ID="rxvNewPassword" runat="server" ControlToValidate="txtNewPassword"
+                        Display="None" ErrorMessage="New password should be between 4 and 50 characters with no spaces"
+                        ValidationExpression="[0-9a-zA-Z]{4,50}" ValidationGroup="2"></asp:RegularExpressionValidator><br />
+                    <asp:RequiredFieldValidator ID="rfvConfirmNewPassword" runat="server" ControlToValidate="txtConfirmNewPassword"
+                        Display="None" ErrorMessage="Please confirm new password!" ValidationGroup="2"></asp:RequiredFieldValidator><br />
+                    <asp:CompareValidator ID="cpvConfirmNewPassword" runat="server" ControlToCompare="txtNewPassword"
+                        ControlToValidate="txtConfirmNewPassword" Display="None" ErrorMessage="Please check password!"
+                        ValidationGroup="2"></asp:CompareValidator>&nbsp;<br />
+                    &nbsp;<asp:RequiredFieldValidator ID="rfvConfirmDeletion" runat="server" ControlToValidate="txtConfirmDeletion"
+                        Display="None" ErrorMessage="Please enter your password" ValidationGroup="3"></asp:RequiredFieldValidator><br />
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 407px">
+                </td>
+                <td>
+                <asp:ValidationSummary ID="Summary2" runat="server" ShowMessageBox="True" ShowSummary="False"
+                        ValidationGroup="2" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 407px">
+                </td>
+                <td>
+                    <asp:ValidationSummary ID="Summary3" runat="server" ShowMessageBox="True" ShowSummary="False"
+                        ValidationGroup="3" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 407px">
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+
+</asp:Content>
+<asp:Content ID="Content2" runat="server" ContentPlaceHolderID="ContentPlaceHolder2">
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 22px; height: 132px">
+            </td>
+            <td style="height: 132px; text-align: left" valign="top">
+                <asp:DataList ID="DataList2" runat="server" DataSourceID="adswwish">
+                    <ItemTemplate>
+                                    -
+                        <asp:LinkButton ID="lnkWishlistTitle" runat="server" CssClass="master" OnClick="lnkWishlistTitle_Click"
+                            Text='<%# Eval("Title") %>'></asp:LinkButton><br />
+                        <span style="font-size: 0.3em">
+                            <br />
+                        </span><span style="font-size: 0.3em">
+                            <asp:Label ID="lblDateUpdated" runat="server" Enabled="False" Font-Size="7pt" Text='<%# Eval("DateUpdated") %>'
+                                Visible="False"></asp:Label>
+                            <asp:Label ID="lblWishlistID" runat="server" Enabled="False" Font-Size="7pt" Text='<%# Eval("WishlistID") %>'
+                                Visible="False"></asp:Label></span>
+                    </ItemTemplate>
+                </asp:DataList>
+                <asp:AccessDataSource ID="adswwish" runat="server" DataFile="App_Data/Wishlist.mdb"
+                    SelectCommand="SELECT wishlist.title, wishlist.wishlistID, wishlist.DateUpdated&#13;&#10;FROM wishlist, xUser&#13;&#10;WHERE xUser.emailaddress = wishlist.XUSER$EmailAddress&#13;&#10;AND wishlist.xUSER$emailaddress = ?&#13;&#10;AND Archived = false&#13;&#10;ORDER BY WishlistID">
+                    <SelectParameters>
+                        <asp:SessionParameter Name="?" SessionField="EmailAddress" />
+                    </SelectParameters>
+                </asp:AccessDataSource>
+            </td>
+        </tr>
+    </table>
+</asp:Content>
+
