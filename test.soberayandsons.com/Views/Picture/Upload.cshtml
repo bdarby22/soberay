@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Soberay.ViewModels.PictureViewModel>
+@{
+    ViewBag.Title = "Manage Pictures";
+    Layout = Url.Content("../Shared/_newLayoutNoSide.cshtml");
+}
+<h2>Existing Pictures</h2>
+
+<div id="ExistingPics">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var m in Model)
+        {
+            var picurl = string.Format("{0}{1}", ViewBag.ImgPrefix, m.S3Url);
+            <div>
+                <img src="@picurl" alt="inventory item image" height="200" width="300" />
+                <div id="caption">@m.Name</div>
+                @Html.ActionLink("Delete", "Delete", "Picture", new { id = m.PictureId }, null)
+            </div>
+        }
+    }
+</div>
+
+@using (Html.BeginForm("Upload", "Picture", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="InventoryId" id = "InventoryId" value="@ViewBag.InventoryId" />
+    <input type="file" name="files" /><br />
+    <input type="file" name="files" /><br />
+    <input type="file" name="files" /><br />
+    <input type="file" name="files" /><br />
+    <input type="file" name="files" /><br />
+    <input type="submit" value="OK" />
+}
+</div>

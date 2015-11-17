@@ -1,0 +1,194 @@
+﻿@using System.Configuration
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="google-site-verification" content="Fmbub6J7X9Yq3AwieMvF_gncms5L2OAqXCSdcwOAuLo" />
+        <meta name="description" content="@ViewBag.Meta"/>
+        <meta name="keywords" content="@ViewBag.Keywords"/>
+        <title>@ViewBag.Title</title>
+        <link href="@Url.Content("~/Content/css/NewSite.css")" rel="stylesheet" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
+        <link rel="shortcut icon" href="@Url.Content("~/Content/img/favicon.ico")" type="image/x-icon" />
+        @RenderSection("HeadLinks",false)
+        <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/js/ga.js")"></script>
+        @RenderSection("HeadScripts", false)
+    </head>
+    <body>
+        <div class="mainDiv">
+            <div id="wrap">
+                <div id="Header">
+                    <div id="HeadLeft">
+                        <a href="@Request.ApplicationPath"><img src="@Url.Content("~/Content/img/logo.png")" alt="logo" border="0" /></a>
+                        <br />
+                        <i>United States @Html.Encode("/") India @Html.Encode("/") Malaysia</i>
+                    </div>
+                    <div id="HeadRight">
+                        <div style="text-align:center;margin-top:32px;"><b>Rubber Machinery Experts</b></div>
+                        <div style="text-align: center">Tire Machinery @Html.Encode("/") Tyre Machinery</div>
+                    </div>
+                    <div style="clear:both;width:100%;"></div>
+                    <table id="nav">
+                        <tr>
+                            <td>@Html.ActionLink("Home", "Index", "Pages")</td>
+                            <td>@Html.ActionLink("About", "About", "Pages")</td>
+                            <td>@Html.ActionLink("Contact", "Contact", "Pages")</td>
+                            <td>@Html.ActionLink("Locate Us", "Locate", "Pages")</td>
+                            <td>@Html.ActionLink("Inventory", "Index", "Inventory")</td>
+                            @if (User.IsInRole("Admin") || User.IsInRole("InventoryManager"))
+                            {
+                                <td>@Html.ActionLink("Site Management", "Management", "Pages")</td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+                <div  id="MainContainer">
+                    <div id="main">@RenderBody()</div>
+					@if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Categories/Summary/Hydraulic%20Press" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Categories/Summary/Hydraulic%20Press")
+    {  
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>Industrial hydraulic presses can cost a  fortune&mdash;unless you have the good fortune to find Soberay and Sons. As the world&rsquo;s  best source of quality pre-owned equipment for the rubber processing industry,  Soberay and Sons gives you the best options in hydraulic presses. When it comes  to second hand hydraulic presses, we stock the most in-demand models from the  most recognized name brands. Our continuously updated collection has featured  such respected manufacturers as French Oil Mill, Vigeroy, Birdsboro, Eemco,  Williams &amp; White and more. <p>&nbsp;</p>
+  Our used hydraulic presses are designed for just about every application  there is. From aerospace and automotive, medical to military, retail products  to industrial parts, if it calls for compression and molding, we&rsquo;ve got the  resources to do it right. Our hydraulic presses are industry-tested, well  maintained and affordably priced. At Soberay and Sons, we understand the  importance of achieving consistency of pressure and temperature as well as the  right degree of applied force. <p>&nbsp;</p>
+  We also offer a wide range of sizes, weights and capacities, daylight  openings and other variables. As a result, we&rsquo;ve made it easy for you to match  the right machinery to your specific needs.&nbsp;  Check out our current inventory below. You can search by brand, or  search for specific features, such as slab side press, 4-post press, lab press  and more. <p>&nbsp;</p>
+  We&rsquo;re also here for you when you need more information. Wondering about  platen sizes or vacuum molding, maintenance or prices? Whatever your questions,  Soberay and Son has answers. Given our more than 70 years of industry  experience, we know our presses and would be happy to help you compare the  options. Call or contact us any time. </p></div>
+ 
+
+} 
+    
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Categories/Summary/Inner%20Tube" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Categories/Summary/Inner%20Tube")
+    {
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;"> 
+<p>Inner tubes are remarkably versatile  products, as important in their own way as the invention of the wheel. Hidden  away inside of pneumatic tyres, these humble items may not seem impressive at  first glance, and yet they are utterly indispensable.&nbsp; Just consider all the ways that people depend  on inner tubes every day. From bicycles to buses, agricultural equipment to  industrial machinery, and countless other large and small applications, inner  tubes affect so many aspects of human activity. <p>&nbsp;</p>
+  With so much depending on the quality  of the inner tubes you produce, you deserve inner tube equipment that you can  depend on, too. In more than 70 years as a supplier to the rubber industry,  Soberay and Sons has earned an excellent reputation for the quality of our  machinery. We&rsquo;re very selective about the pre-owned inner tube machinery that  we offer for sale. We only source the <em>best</em>!<p>&nbsp;</p>
+  We look for inner tube equipment that  offers you both advanced technology and ease of use. The inner tube machinery  that you purchase at Soberay and Sons is designed to meet your manufacturing  challenges. From mixing, kneading, extruding, and pressing, to splicing,  cutting, joining and curing, our inventory of machines can provide you with  complete coverage for every step of your rubber manufacturing process. <p>&nbsp;</p>
+  Let&rsquo;s talk about value. In the current  global economy, competition among manufacturers is fierce. As consumers seek  out lower priced goods, manufacturers must continually seek out new ways to  lower their production costs. Yet no sensible consumer or self-respecting  manufacturer is willing to compromise on quality. As a result, the challenge  for inner tube producers is to find the highest quality inner tube equipment at  the most competitive prices. Fortunately, Soberay and Sons delivers on both  quality and price. Now <em>that&rsquo;s</em> good  value. </p></div>
+
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Categories/Summary/mill" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Categories/Summary/mill")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>When you operate a rubber production facility, you  rely on your equipment to maintain both the highest levels of output and the  highest levels of quality. So every machine on your floor needs to be durable,  reliable, and built to excel. At Soberay and Sons, we&rsquo;re in the business of excellence.  We source our rubber mills and other rubber equipment and machine parts with  the utmost care. <p>&nbsp;</p>
+  In order to bring you the best used rubber mixing  mills, our in-house experts seek out the best manufacturers. Here you can find top  rated Farrel rubber mills, industrial grade Bolling rubber mills, and other  leading name brands like Adamson and Kobe. Every item in our lineup of rubber  mills is has been produced from high-grade materials and engineered for  efficiency, low maintenance, and high output. We check out every component,  from roll friction and anti friction bearings, to gearboxes and end guides.<p>&nbsp;</p>
+  We also excel at offering our customers great  choices. We stock pre owned rubber mills in a wide variety of styles, including  cabinet, two roll, roller bearing, lab mill and more. Choose from several  sizes, such as a 22&rdquo; x 60&rdquo; rubber mill by Farrel, a 26&rdquo;  x 84&rdquo; rubber mill from  Bolling, or a 28&rdquo; x100&rdquo; rubber mill by Farrel. Get all the  details as you browse or search our product offerings below. </p><br>
+<p>As you will see, we at Soberay and Sons take great  pride in attending to every detail&mdash;and it shows. See for yourself. Click on any  item number to view photos that give you an all-angles view of the machinery  available for sale. Our competitors may be content just to tell you that that  their used equipment is in &ldquo;good condition,&rdquo; but at Soberay and Sons we deliver  the <em>proof</em>! </p></div>
+
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Categories/Summary/Extruder%20Cold%20Feed" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Categories/Summary/Extruder%20Cold%20Feed")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>When you purchase extrusion equipment from Soberay and  Sons, you get a lot more than pre owned machinery. You also get the quality  that comes from our comprehensive quality control. We thoroughly check, clean,  and catalog every rubber-industry product that we supply. As our searchable  product chart shows, we know every detail of our extruder cold feed machinery.</p><br>
+<p>No matter what you produce&mdash;tyres, hoses, automotive profiles,  cables, or other rubber products&mdash;our high-performance extrusion equipment is up  to the task. Our inventory includes both vented and non-vented options. Take  your pick of the most sought-after name brands, too. You&rsquo;ll also find a wide  range of sizes and speeds. But hurry&mdash;we price our extruders competitively! </p></div>
+
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1750px;">
+<p>When you&rsquo;re in the rubber industry, you&rsquo;re in the  business of being productive day in, day out. So you need rubber equipment that  can keep up with demand. You also have to manage your operating costs. That&rsquo;s  why you need Soberay and Sons.</p><br>
+<p>Soberay and Sons delivers some of the mightiest, most  cost-effective used rubber machinery in the industry. Whatever your rubber industry applications&mdash;from the production of rubber  crumb to the development of large-scale rubber products&mdash;we stock the  high-performance pre-owned rubber machinery that your work  requires. This is quality secondhand rubber machinery that&rsquo;s second to none for  value. </p><br>
+<p>We also carry one of the best selections of quality used  gearboxes&mdash;each gearbox built to handle the constantly changing loads of  high-volume production. Whatever output power or reduction ratio you require,  you&rsquo;ll find the gearbox that meets your specifications.</p><br>
+<p>Time-tested and built for the long  haul, our inventory also delivers on choice. From precision-made rubber lab  equipment to powerhouse used tyre machinery, we sell everything you need to get  the job done right.&nbsp; We also sell quality parts  for Along with rubber extrusion equipment and tyre machines; we also sell  quality components, including calendars parts and rolls, mill and mixer parts,  and so much more.&nbsp; </p><br>
+<p>As a global supplier and family-owned business, we  combine world-class quality with personalized customer service. Our in-house  experts can help you match the right equipment to the task. Contact us and  let&rsquo;s talk your project needs. Because when your goals are high volume production and low production costs, Soberay and Sons has  what you need to make it happen. </p>
+</div>
+
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Inventory")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>Building quality tires is not for amateurs. The end  product may seem simple, but the process of developing that product is anything  but! Building quality tires is a complex process that calls for sophisticated  machinery. Formulating and then mixing the rubber compound is just the  beginning. There&rsquo;s also the preparation of the cord, the calendering steps for  belt, ply, and the innermost layer of the tire. Next come the bead component  preparation and the extrusion of tread and sidewall.<p>&nbsp;</p>
+  Only then can the tire building truly proceed. This is in  itself is an involved process. The wrapping of inner liner and ply is followed,  one stage at a time, by the application of the bead assemblies, sidewall,  belts, cap, and tread. As you move through each of these steps, the quality of  the machinery really starts to tell. By the time you get to the curing process,  it&rsquo;s obvious&mdash;a quality tire depends on a quality tire building machine. <p>&nbsp;</p>
+  At Soberay and Sons, we&rsquo;re known for the high quality  used tire machinery that we sell. We search the globe to bring you the highest  quality of secondhand tire machinery available. We offer the most valued name  brands and we aim to provide machine coverage for every step of the process.  Looking for a McNeil &amp; NRM tire press, McNeil &amp; NRM tire building  machine, or McNeil &amp; NRM rubber extruder? We carry them, along with other  leading name brands like Farrel, Bolling, Werner &amp; Pfleiderer, Kobelco, and  more. <p>&nbsp;</p>
+  Search our inventory for the brand that interests you and  review the details. You can also click on any item number to access multiple  photos. At Soberay and Sons, we take pride in delivering value. That&rsquo;s  why we&rsquo;re selective about our machinery and competitive about our pricing. We&rsquo;ve built our reputation on a 70-year history of superb customer  service. </p></div>
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory/Details/1083" || HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory/Details/1083")
+    { 
+  <div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>Combining diverse materials to produce  a smooth compound can be a challenging process. Consider, for example, how  widely degrees of hardness can vary in different materials.&nbsp; On some mixers, the rotor blade that works  effectively for one kind of material may not work as well for another kind of  material. Yet uniformity of texture and distribution is critical to the  successful mixing of a rubber compound. So how do you allow for divergent  materials and still achieve a smooth result?<p>&nbsp;</p>
+  Soberay and Sons has the answer. Our  new unused F270 Banbury rubber mixer is designed to meet the challenge of  cutting, combining, and mixing materials of low to high hardness. This Farrel  rubber mixer represents a major improvement over older rubber mixing machinery.  The F270 Banbury mixer has an  enhanced chamber, or mixer hopper, that holds up to 246 liters. The steep  angle of hopper door also makes it easier to add rubber and other materials  into the mixer. <p>&nbsp;</p>
+  In addition, the four-wing rotor system  makes for a smoother mix, as each wing has its own specific function. Now it&rsquo;s  easier to introduce polymers into the mix without damaging their  attributes.&nbsp; It&rsquo;s also easier to disperse  the various materials evenly throughout the mix. With the Farrel brand F270 Banbury rubber mixer,  every step of the mixing process is quality controlled. <p>&nbsp;</p>
+  Click on the item number below to see several different  perspectives of the Farrel rubber mixer. As you will see, this product is in  pristine condition. This is an excellent opportunity to obtain unused rubber  production equipment at a discount.&nbsp; The  F270 Banbury mixer offers several benefits: </p>
+  &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;It achieves advanced mixing of a wide array of materials. <br>
+  &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;It delivers excellent bond ratios and uniform polymer  bonding.<br>
+  &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;It&rsquo;s easy to clean and maintain. <br>
+ &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;It offers new machinery quality at a used-machinery  price. <br>
+</div>
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Categories/Summary/Extruder%20Plastic" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Categories/Summary/Extruder%20Plastic")
+    { 
+  <div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>Quality plastic extrusion depends on so many details. From  screw design to screw drive motor, barrel to breaker plate, every part of the  plastic extrusion equipment needs to operate at its best. That&rsquo;s why Soberay  and Sons only stocks quality used plastic extruders. Built by the leading  name-brand manufacturers, they&rsquo;re engineered to maximize your productivity. </p><br>
+<p>Use our searchable inventory to find the pre owned  plastic extrusion machine that best meets your needs. Don&rsquo;t see your exact  specifications? No problem. Just give us a call at (216) 334-2003, or <a href="http://www.soberaysons.com/Pages/Contact">contact us</a> online to let us know what  you&rsquo;re looking for&mdash;we constantly update our inventory. Thanks to our extensive  network, we&rsquo;re experts at sourcing the best pre-owned plastics equipment. </p>
+</div>
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory/Details/5039" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Inventory/Details/5039")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>When  it comes to tire curing, so much depends on the quality of the mechanical tire  curing press. Soberay &amp; Sons now offers you an opportunity to acquire a highly  effective tire bladder press in addition to tire curing presses. Produced by the  respected tire equipment innovator Francis Shaw of England prior to its  acquisition by HF Mixing Group, this truck tire bladder press serves up 1050  tons of closing force, with a generous 84 inches of daylight between the  compression molds. </p><br>
+  <p>Take  an up-close look, using our photo gallery below. Then request your free  quote or<a href="mailto:sales@soberaysons.com">email</a> us for sales and shipping details. We  thoroughly inspect our rubber-industry equipment for quality and would be happy  to answer any questions that you have. </p>
+  </div>
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory/Details/5161" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Inventory/Details/5161")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>Once the first stage of  tire building is complete and while the tire is still green, it&rsquo;s time to  paint. Make sure that the look pre-vulcanization treatment of your tires lives up  to their superior form and function. With a pre-owned mechanical tire press  from Soberay &amp; Sons, high quality paint processing is available at an  affordable price.</p> <br>
+ <p> Adjustable for passenger  vehicle tires of up to 17 inches and light truck tires of up to 20 inches, the  mechanical tire painter applies paint evenly and efficiently. Click on any of  the images below to examine the unit, which includes conveyer belt, adjustable spraying  tubes, and more. </p>
+  </div>
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory/Details/5197" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Inventory/Details/5197")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<p>For a tire building machine  (TBM) that&rsquo;s versatile but also a good value, depend on Soberay &amp; Sons. &nbsp;Our used tire Steelastic unit is a winner on  both counts. It's ideal for the production of your fabric components.The tire  Steelastic unit really shines during the all-important extrusion phase, as it  processes rubber compounds and sets up parts for the tire-building phase. </p><br>
+ <p> This is the real deal,  complete with all the components you need to achieve a steady cycle of  extrusion, cutting, and adjustable-width tire building.&nbsp; Review the detailed information and click on  the photos below for enlarged views of the machine parts. Then request your  free quote. Feel free to include any questions or to tell us more about your  TBM needs. Our specialty is personalized service!</p>
+  </div>
+}
+else if (HttpContext.Current.Request.Url.AbsoluteUri == "http://www.soberaysons.com/Inventory/Details/5308" || HttpContext.Current.Request.Url.AbsoluteUri == "http://soberaysons.com/Inventory/Details/5308")
+    { 
+<div style="position: absolute; float: left; width: 50%; left: 349px; top: 1511px;">
+<strong>OTR Strip Winder</strong>
+  <p>Your tire building business  demands equipment that combines high productivity, reliable operation, and  quality engineering. At Soberay &amp; Sons, we search the globe to supply you  with tire machinery that meets that standard every time. Case in point, our Orbitread  OTR strip winder&mdash;it&rsquo;s built tough and runs smooth to build off road tires of up  to 33-inch bead size.</p><br>
+  <p>Whether you plan to build new  tires or to retread and recycle OTR tires, our quality-built used OTR strip  winder is up to the challenge. Save time and money without compromising on  quality. This retread machine features adjustable positioning, dancing roll  control, a cold feed extruder, an arm for rasped tires, and more. Request your  free quote now. </p>
+  </div>
+}
+                    <div id="sidebar">
+                        <form action="/inventory/search/" method="GET">
+                            <input type="text" id="id" name="id"/><input type="submit" value="Search"/>
+                        </form>
+                        @Html.Partial("_Categories")
+                        @Html.Partial("_Newspaper")
+
+                        <div id="twitterbox">
+                            <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+                            <script type="text/javascript" src="@Url.Content("~/Content/js/twitterbox.js")"></script>    
+                        </div>                    
+             
+                    </div>
+                    <div id="footer">&#169; 2012. Soberay & Sons, Ltd<div id="logindisplay">@Html.Partial("_LogOnPartial")</div></div>
+                </div>
+            </div>
+        @RenderSection("Scripts", false)
+            <script src="@Url.Content("~/Content/js/categories.js")"></script>
+            <script src="@Url.Content("~/Content/js/ga.js")" type="text/javascript"></script>
+
+     </div>
+	 <!-- begin olark code -->
+<script data-cfasync="false" type='text/javascript'>/*<![CDATA[*/window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https:"?"https:":"http:",z=c.name,r="load";var nt=function(){
+f[z]=function(){
+(a.s=a.s||[]).push(arguments)};var a=f[z]._={
+},q=c.methods.length;while(q--){(function(n){f[z][n]=function(){
+f[z]("call",n,arguments)}})(c.methods[q])}a.l=c.loader;a.i=nt;a.p={
+0:+new Date};a.P=function(u){
+a.p[u]=new Date-a.p[0]};function s(){
+a.P(r);f[z](r)}f.addEventListener?f.addEventListener(r,s,false):f.attachEvent("on"+r,s);var ld=function(){function p(hd){
+hd="head";return["<",hd,"></",hd,"><",i,' onl' + 'oad="var d=',g,";d.getElementsByTagName('head')[0].",j,"(d.",h,"('script')).",k,"='",l,"//",a.l,"'",'"',"></",i,">"].join("")}var i="body",m=d[i];if(!m){
+return setTimeout(ld,100)}a.P(1);var j="appendChild",h="createElement",k="src",n=d[h]("div"),v=n[j](d[h](z)),b=d[h]("iframe"),g="document",e="domain",o;n.style.display="none";m.insertBefore(n,m.firstChild).id=z;b.frameBorder="0";b.id=z+"-loader";if(/MSIE[ ]+6/.test(navigator.userAgent)){
+b.src="javascript:false"}b.allowTransparency="true";v[j](b);try{
+b.contentWindow[g].open()}catch(w){
+c[e]=d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try{
+var t=b.contentWindow[g];t.write(p());t.close()}catch(x){
+b[k]=o+'d.write("'+p().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};ld()};nt()})({
+loader: "static.olark.com/jsclient/loader0.js",name:"olark",methods:["configure","extend","declare","identify"]});
+/* custom configuration goes here (www.olark.com/documentation) */
+olark.identify('8383-135-10-8435');/*]]>*/</script><noscript><a href="https://www.olark.com/site/8383-135-10-8435/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
+<!-- end olark code -->
+    </body>
+</html>

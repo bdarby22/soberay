@@ -1,0 +1,100 @@
+﻿@model InventoryViewModel
+
+@{
+    ViewBag.Title = @Model.Name;
+    ViewBag.Meta = @Model.Details;
+    ViewBag.Keywords = @Model.Tags;
+}
+
+<h1>@Model.Name</h1>
+
+@if (User.IsInRole("InventoryManager"))
+{
+    @Html.ActionLink("Edit", "Edit", "Inventory", new { id = Model.InventoryId }, null) @Html.Encode(" | ")
+    @Html.ActionLink("Edit Pictures", "Upload", "Picture", new { id = Model.InventoryId }, null) @Html.Encode(" | ")
+}
+else
+{
+    <a href="mailto:sales@soberaysons.com?subject=Item Number @Model.InventoryId">More Information</a> @Html.Encode(" | ")
+    
+}
+@Html.ActionLink("Print This", "Print", new { id = Model.InventoryId })
+<br />
+<br />
+
+<table>
+    <tr>
+        <td colspan="5" style="background-color:Gray;color:White;">Item Number</td>
+    </tr>
+    <tr>
+        <td>@Model.InventoryId</td>
+    </tr>
+    <tr style="background-color:Gray;color:White;">
+            <td style="background-color:Gray;color:White;">Manufacturer</td>
+            <td style="background-color:Gray;color:White;">Qty</td>
+            <td style="background-color:Gray;color:White;">Size</td>
+            <td style="background-color:Gray;color:White;">Style</td>
+            <td style="background-color:Gray;color:White;">Type</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Manufacturer)</td>
+        <td>@Html.DisplayFor(model => model.Quantity)</td>
+        <td>@Html.DisplayFor(model => model.Size)</td>
+        <td>@Html.DisplayFor(model => model.Style)</td>
+        <td>@Html.DisplayFor(model => model.Category)</td>
+    </tr>
+    <tr>
+        <td colspan="5" style="background-color:Gray;color:White;">Details</td>
+    </tr>
+    <tr>
+        <td colspan="5">@Html.DisplayFor(model => model.Details)</td>
+    </tr>
+    @if (User.IsInRole("Authenticated"))
+    {
+        <tr style="background-color:Gray;color:White;">
+            <td>Location</td>
+            <td>Cost</td>
+            <td>Selling Price</td>
+            <td>Joint Venture</td>
+            <td>Category</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.Location)</td>
+            <td>@Html.DisplayFor(model => model.Cost)</td>
+            <td>@Html.DisplayFor(model => model.SellingPrice)</td>
+            <td>@Html.DisplayFor(model => model.JointVenture)</td>
+        </tr>
+        <tr style="background-color:Gray;color:White;">
+            <td>Featured Rubber</td>
+            <td>Featured Tire</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.FeaturedRubber)</td>
+            <td>@Html.DisplayFor(model=>model.FeaturedTire)</td>
+        </tr>
+        
+    }
+
+</table>
+<br />
+<div>Tags: @Html.DisplayFor(model => model.Tags)</div>
+<br />
+
+<fieldset>
+    <legend>Images</legend>
+    @if (Model.PictureUrls.Any())
+    {
+        foreach (var pic in Model.PictureUrls)
+        {        
+            <a href="@pic"><img src="@pic" alt="Item Image" width="300" height="200"/></a>
+        }
+    }
+</fieldset>
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.InventoryId })
+        @Html.Encode(" | ")       
+    } 
+    @Html.ActionLink("Back to List", "Index")
+</p>

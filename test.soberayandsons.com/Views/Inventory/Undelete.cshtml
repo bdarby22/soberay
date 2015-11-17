@@ -1,0 +1,17 @@
+﻿@model Soberay.ViewModels.InventoryViewModel
+
+@{
+    ViewBag.Title = "Undelete";
+    Layout = Url.Content("../Shared/_newLayoutNoSide.cshtml");
+}
+
+<h2>Undelete</h2>
+
+<h3>Are you sure you want to undelete this?</h3>
+
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Undelete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

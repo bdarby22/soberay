@@ -1,0 +1,126 @@
+﻿@model Soberay.ViewModels.InventoryViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    <fieldset>
+        <legend>New Inventory Item</legend>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model=>model.InventoryId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InventoryId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Manufacturer)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Manufacturer)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quantity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Quantity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Size)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Size)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Style)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Style)
+        </div>
+
+        <div class="editor-label">
+            <label for="Category">Category</label>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Category)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Details)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Details)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Location)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Location)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cost)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cost)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SellingPrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SellingPrice)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.JointVenture)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.JointVenture)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FeaturedRubber)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBox("FeaturedRubber")
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FeaturedTire)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBox("FeaturedTire")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Tags)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Tags)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

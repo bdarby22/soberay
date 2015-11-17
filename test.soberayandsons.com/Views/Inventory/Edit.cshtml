@@ -1,0 +1,129 @@
+﻿@model Soberay.ViewModels.InventoryViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm()) {
+    <fieldset>
+        <legend></legend>
+        <div>@Html.ActionLink("Manage Photos for this Item", "Upload","Picture", new { id = Model.InventoryId }, null)</div>
+        <div>@Html.ActionLink("Delete", "Delete", new { id = Model.InventoryId })</div>
+        
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InventoryId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InventoryId) <span style="color:red">Note: If you update this field it cannot be undone</span>           
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Manufacturer)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Manufacturer)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quantity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Quantity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Size)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Size)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Style)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Style)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model=> model.Category)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Category)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Details)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Details, 10, 100, null)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Location)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Location)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Cost)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Cost)
+        </div>
+
+        <div class="editor-label">
+            <label for="SellingPrice">Selling Price</label>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SellingPrice)
+        </div>
+
+        <div class="editor-label">
+            <label for="JointVenture">Joint Venture</label>
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.JointVenture)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Tags)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Tags)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FeaturedRubber)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBox("FeaturedRubber")
+        </div>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FeaturedTire)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBox("FeaturedTire")
+        </div>
+        
+        @Html.HiddenFor(model => model.Deleted)
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+

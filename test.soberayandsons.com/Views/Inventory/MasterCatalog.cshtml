@@ -1,0 +1,156 @@
+﻿@model IEnumerable<Soberay.ViewModels.InventoryViewModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>MasterCatalog</title>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <th>
+                Picture
+            </th>
+            <th>
+                InventoryId
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Style
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Details
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Cost
+            </th>
+            <th>
+                SellingPrice
+            </th>
+            <th>
+                JointVenture
+            </th>
+            <th>
+                Featured Rubber
+            </th>
+            <th>
+                Featured Tire
+            </th>
+            <th>
+                SortId
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Updated
+            </th>
+            <th>
+                Deleted
+            </th>
+            <th>
+                Tags
+            </th>
+            <th></th>
+        </thead>
+    
+    @foreach (var item in Model)
+    {
+        var picture = item.PictureUrls.FirstOrDefault() ?? "";
+        <tr>
+            <td>
+                @if (picture != "")
+                {
+                    <img src="@ViewBag.S3ImagePrefix@picture" alt="picture" height="200" width="300"/>    
+                }
+                else
+                {
+                    <p>No Image Available</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InventoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SellingPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JointVenture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeaturedRubber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeaturedTire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SortId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tags)
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

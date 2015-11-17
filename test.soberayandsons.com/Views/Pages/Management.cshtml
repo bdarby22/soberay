@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Management";
+    Layout = Url.Content("../Shared/_newLayoutNoSide.cshtml");
+}
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45577422-1', 'soberaysons.com');
+  ga('send', 'pageview');
+
+</script>
+<h2>Management Page</h2>
+@Html.ActionLink("Master Catalog","MasterCatalog","Inventory")<br />
+@Html.ActionLink("Create new Inventory","Create","Inventory")<br/>
+@Html.ActionLink("Update existing Inventory", "Index", "Inventory")<br/>
+@Html.ActionLink("View deleted Inventory","ViewDeleted","Inventory")<br />
+@if (User.IsInRole("Admin"))
+{
+    <a href="https://bitly.com/a/summary">Link Clicks</a><br />
+    <a href="https://www.google.com/analytics/web/#dashboard/default/a27233484w52404340p53173928/">Google Analytics</a>    
+}
+

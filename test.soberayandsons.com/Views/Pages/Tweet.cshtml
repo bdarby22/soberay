@@ -1,0 +1,19 @@
+﻿@model Soberay.ViewModels.InventoryViewModel
+
+@{
+    ViewBag.Title = "Tweet";
+}
+
+@section Scripts{
+    <script type="text/javascript" src="@Url.Content("~/Content/js/twitter.js")"></script>
+}
+
+<h2>Send a Tweet</h2>
+<div id="messages">&nbsp;</div>
+<div class="tweetbox">
+<form id="theform">
+    <textarea rows="5" cols="60" id="tweetbox" name="tweetbox"></textarea>
+</form>
+    <div id="tweetlength"></div>
+</div>
+<button id="sendtweet" value="Send">Send</button>

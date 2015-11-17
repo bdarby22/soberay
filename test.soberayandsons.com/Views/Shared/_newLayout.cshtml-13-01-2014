@@ -1,0 +1,70 @@
+﻿@using System.Configuration
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="google-site-verification" content="Fmbub6J7X9Yq3AwieMvF_gncms5L2OAqXCSdcwOAuLo" />
+        <meta name="description" content="@ViewBag.Meta"/>
+        <meta name="keywords" content="@ViewBag.Keywords"/>
+        <title>@ViewBag.Title</title>
+        <link href="@Url.Content("~/Content/css/NewSite.css")" rel="stylesheet" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
+        <link rel="shortcut icon" href="@Url.Content("~/Content/img/favicon.ico")" type="image/x-icon" />
+        @RenderSection("HeadLinks",false)
+        <script type="text/javascript" src="@Url.Content("~/Content/js/jquery.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/js/ga.js")"></script>
+        @RenderSection("HeadScripts", false)
+    </head>
+    <body>
+        <div class="mainDiv">
+            <div id="wrap">
+                <div id="Header">
+                    <div id="HeadLeft">
+                        <a href="@Request.ApplicationPath"><img src="@Url.Content("~/Content/img/logo.png")" alt="logo" border="0" /></a>
+                        <br />
+                        <i>United States @Html.Encode("/") India @Html.Encode("/") Malaysia</i>
+                    </div>
+                    <div id="HeadRight">
+                        <div style="text-align:center;margin-top:32px;"><b>Rubber Machinery Experts</b></div>
+                        <div style="text-align: center">Tire Machinery @Html.Encode("/") Tyre Machinery</div>
+                    </div>
+                    <div style="clear:both;width:100%;"></div>
+                    <table id="nav">
+                        <tr>
+                            <td>@Html.ActionLink("Home", "Index", "Pages")</td>
+                            <td>@Html.ActionLink("About", "About", "Pages")</td>
+                            <td>@Html.ActionLink("Contact", "Contact", "Pages")</td>
+                            <td>@Html.ActionLink("Locate Us", "Locate", "Pages")</td>
+                            <td>@Html.ActionLink("Inventory", "Index", "Inventory")</td>
+                            @if (User.IsInRole("Admin") || User.IsInRole("InventoryManager"))
+                            {
+                                <td>@Html.ActionLink("Site Management", "Management", "Pages")</td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+                <div  id="MainContainer">
+                    <div id="main">@RenderBody()</div>
+                    <div id="sidebar">
+                        <form action="/inventory/search/" method="GET">
+                            <input type="text" id="id" name="id"/><input type="submit" value="Search"/>
+                        </form>
+                        @Html.Partial("_Categories")
+                        @Html.Partial("_Newspaper")
+
+                        <div id="twitterbox">
+                            <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+                            <script type="text/javascript" src="@Url.Content("~/Content/js/twitterbox.js")"></script>    
+                        </div>                    
+             
+                    </div>
+                    <div id="footer">&#169; 2012. Soberay & Sons, Ltd<div id="logindisplay">@Html.Partial("_LogOnPartial")</div></div>
+                </div>
+            </div>
+        @RenderSection("Scripts", false)
+            <script src="@Url.Content("~/Content/js/categories.js")"></script>
+            <script src="@Url.Content("~/Content/js/ga.js")" type="text/javascript"></script>
+
+     </div>
+    </body>
+</html>

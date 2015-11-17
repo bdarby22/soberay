@@ -1,0 +1,191 @@
+﻿@model List<Soberay.ViewModels.InventoryViewModel>
+@{
+    ViewBag.Title = "Index";
+    var searchTerm = ViewBag.SearchTerm ?? " ";
+}
+
+
+@section HeadLinks
+{
+    <link href="@Url.Content("~/Content/DataTables-1.9.0/media/css/jquery.dataTables.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/DataTables-1.9.0/media/css/jquery.dataTables_themeroller.css")" rel="stylesheet" type="text/css" />
+}
+@section HeadScripts
+{
+    <script src="@Url.Content("~/Content/js/DataTables-1.9.0/media/js/jquery.dataTables.min.js")" type="text/javascript"></script>
+}
+@section Scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Content/js/inventoryTable.js")"></script>
+    <script type="text/javascript">
+        var searchTerm = '@searchTerm';
+
+        doTable();
+        $(function () {
+            oTable.fnFilter(searchTerm);
+        });
+        
+    </script>
+}
+
+<h1>
+    @if (!string.IsNullOrEmpty(ViewBag.CategoryName))
+    {
+        @ViewBag.CategoryName
+    }
+    else
+    {
+        <span>All Inventory</span>
+    }
+</h1>
+<div id="tableContainer">
+    <table id="example">
+        <thead>
+            @if (User.IsInRole("InventoryManager"))
+            { 
+                <th></th>
+                <th></th>                               
+            }
+            <th>Item Number</th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Style
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Details
+            </th>
+        @if (User.IsInRole("Authenticated"))
+        {
+            <th>
+                Location
+            </th>
+            <th>
+                Cost
+            </th>
+            <th>
+                Selling Price
+            </th>
+            <th>
+                Joint Venture
+            </th>
+        }
+        </thead>
+
+    @foreach (var item in Model)
+    {
+        string ShortDetails = item.Details;
+        
+        <tr>
+            @if (User.IsInRole("InventoryManager"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Inventory", new { id = item.InventoryId }, null)                
+                </td>
+                if (item.Deleted)
+                {
+                    <td>
+                        @Html.ActionLink("Undelete", "Undelete", "Inventory", new { id = item.InventoryId }, null)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", "Inventory", new { id = item.InventoryId }, null)
+                    </td>
+                }
+            }
+            <td>
+                @Html.ActionLink(item.InventoryId, "Details", "Inventory", new { id = item.InventoryId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            @if (item.Details != null)
+            {
+                if (item.Details.Length >= 100)
+                {
+                    <td>
+                        @string.Format("{0}...", item.Details.Substring(0, 100))
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Details)
+                    </td>                
+                }
+            }
+            else
+            {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Details)
+                    </td> 
+            }
+            
+            @if (User.IsInRole("Authenticated"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellingPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JointVenture)
+                </td>
+            }
+
+        </tr>
+
+    }
+        <tfoot>
+            @if (User.IsInRole("InventoryManager"))
+            { 
+                <th></th>
+                <th></th>                               
+            }
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        @if (User.IsInRole("Authenticated"))
+        {
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        }
+        </tfoot>
+
+    </table>
+</div>
