@@ -1,97 +1,100 @@
-﻿@model IEnumerable<InventoryViewModel>
+﻿@model IEnumerable<inventoryviewmodel>
 
-@{
-    ViewBag.Title = "Details";
-}
-
-
-<h1>All @ViewBag.Category</h1>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Manufacturer
-        </th>
-        <th>
-            Quantity
-        </th>
-        <th>
-            Size
-        </th>
-        <th>
-            Style
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Details
-        </th>
-    @if (User.IsInRole("Authenticated"))
-    {
-        <th>
-            Location
-        </th>
-        <th>
-            Cost
-        </th>
-        <th>
-            Selling Price
-        </th>
-        <th>
-            Joint Venture
-        </th>
+    @{
+        ViewBag.Title = "Details";
     }
-        <th>
-            Tags
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Details", "Inventory", new { id = item.InventoryId }, null)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Manufacturer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Size)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Style)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Details)
-        </td>
-    @if (User.IsInRole("Authenticated"))
-    {
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SellingPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JointVenture)
-        </td>
-    }
-        <td>
-            @Html.DisplayFor(modelItem => item.Tags)
-        </td>
-    </tr>
-}
 
-</table>
+    <h1>All @ViewBag.Category</h1>
+    <table>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Style
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Details
+            </th>
+            @if (User.IsInRole("Authenticated"))
+            {
+                <th>
+                    Location
+                </th>
+                <th>
+                    Cost
+                </th>
+                <th>
+                    Selling Price
+                </th>
+                <th>
+                    Joint Venture
+                </th>
+            }
+            <th>
+                Tags
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", "Inventory", new { id = item.InventoryId }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Style)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                @if (User.IsInRole("Authenticated"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SellingPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JointVenture)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tags)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+   
